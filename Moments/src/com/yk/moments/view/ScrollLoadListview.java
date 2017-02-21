@@ -1,8 +1,8 @@
 package com.yk.moments.view;
 
-import com.yk.moments.R;
-
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,9 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.yk.moments.R;
 
 /**   
 * @Title: LoadListview.java 
@@ -92,12 +94,20 @@ public class ScrollLoadListview extends ListView implements OnScrollListener {
 				isLoading=true;
 				if(this.mIScrollLoadListListener!=null)
 				{
-					this.mIScrollLoadListListener.onLoad();
-					moreDateLoadComplete();
+					/*this.mIScrollLoadListListener.onLoad();
+					moreDateLoadComplete();*/
+					mHandler.sendEmptyMessageDelayed(0, 1000);
 				}
 			}
 		}
 	}
+	
+	private Handler mHandler=new Handler(){
+		public void handleMessage(Message msg) {
+			mIScrollLoadListListener.onLoad();
+			moreDateLoadComplete();
+		};
+	};
 	
 	public void setILoadListListener(IScrollLoadListListener iLoadListListener)
 	{

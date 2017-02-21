@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import org.apache.http.client.ClientProtocolException;
-
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Handler;
+import android.util.Log;
 
 /**   
 * @Title: HttpJsonThread.java 
@@ -21,7 +23,7 @@ public abstract class JsonListUtil<T> extends Thread{
 	private String murl;
 	private Handler mhandler;
 	private Class<?> mclass; 
-	
+	private Context mContext;
 	/**
 	* @author yk
 	* @date 2015年8月3日 下午3:47:29 
@@ -32,11 +34,12 @@ public abstract class JsonListUtil<T> extends Thread{
 	* @param listview list控件
 	* @param layoutId 填充list的item的id
 	 */
-	public JsonListUtil(String url) {
+	public JsonListUtil(Context context,String url) {
 		// TODO Auto-generated constructor stub
 		this.murl=url;
 		this.mhandler=new Handler();
 		this.mclass=getMyClass();
+		mContext=context;
 	}
 	
 	/**
@@ -47,7 +50,16 @@ public abstract class JsonListUtil<T> extends Thread{
 		// TODO Auto-generated method stub
 		String resultStr="";
 		try {
-			resultStr = HttpClientGetOperate.httpClientGet(murl);
+			SharedPreferences sp = mContext.getSharedPreferences("sp_com", Context.MODE_PRIVATE);
+			resultStr = sp.getString(murl, "");
+			Log.i("YK", resultStr);
+			if("".equals(resultStr))
+			{
+				resultStr = HttpClientGetOperate.httpClientGet(murl);
+				Editor editor = sp.edit();
+				editor.putString(murl, resultStr);
+				editor.commit();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -11,6 +11,8 @@ import java.net.URL;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -25,7 +27,7 @@ import encrypt.StringToMd5;
 
 /**   
 * @Title: HttpImgUnit.java 
-* @Package com.sunnyit.common.http 
+* @Package 
 * @Description: TODO
 * @author yk
 * @date 2015年8月3日 下午4:25:23 
@@ -41,11 +43,10 @@ public class ImgUtil extends Thread {
 	
 	private Handler mhandler=new Handler(){
 		public void handleMessage(Message msg) {
-/*			if(mimageView.getTag().equals(murl))
+			if(mimageView.getTag().equals(murl))
 			{
 				mimageView.setImageBitmap((Bitmap) msg.obj);
-			}*/
-			mimageView.setImageBitmap((Bitmap) msg.obj);
+			}
 		};
 	};
 	
@@ -105,10 +106,10 @@ public class ImgUtil extends Thread {
 		             if (cachebitmap != null) {
 		                 // 将图片加入到内存缓存中
 		            	 mimageCache.getMcache().put(murl, cachebitmap);
+		            	 Message message=Message.obtain();
+			             message.obj=cachebitmap;
+			             mhandler.sendMessage(message);
 		             }
-					 Message message=Message.obtain();
-		             message.obj=cachebitmap;
-		             mhandler.sendMessage(message);
 		            
 	            } catch (IOException e) {
 	                e.printStackTrace();

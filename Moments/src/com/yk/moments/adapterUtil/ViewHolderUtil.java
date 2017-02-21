@@ -202,7 +202,7 @@ public class ViewHolderUtil {
 	public void setImageURI(int viewId,String url)
 	{
 		ImageView imgview=getView(viewId);
-		//mView.get(viewId).setTag(url);
+		mView.get(viewId).setTag(url);
 		if(url!=null)
 		{
 			new ImgUtil(url, imgview,mimageCache,mimageDiskCache).start();

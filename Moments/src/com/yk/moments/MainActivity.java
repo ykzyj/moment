@@ -15,20 +15,13 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
 	private static final int REFRESH_COMPLETE = 0X110;
 	private  ScrollLoadListview mListView;
 	private  ShowViewInit mShowViewInit;
+	private  HeadViewInit mHeadViewInit;
 	private SwipeRefreshLayout mSwipeLayout;  
 	private Handler mHandler = new Handler()
 	{
 		public void handleMessage(android.os.Message msg)
 		{
 			mSwipeLayout.setRefreshing(false);
-/*			switch (msg.what)
-			{
-			case REFRESH_COMPLETE:
-				mDatas.addAll(Arrays.asList("Lucene", "Canvas", "Bitmap"));
-				mAdapter.notifyDataSetChanged();
-				mSwipeLayout.setRefreshing(false);
-				break;
-			}*/
 		};
 	};
 	@Override
@@ -47,10 +40,13 @@ public class MainActivity extends Activity implements SwipeRefreshLayout.OnRefre
 		mListView.addHeaderView(HeaderView);
 		mShowViewInit=new ShowViewInit(MainActivity.this, "http://thoughtworks-ios.herokuapp.com/user/jsmith/tweets", mListView,mSwipeLayout);
 		mShowViewInit.start();
+		mHeadViewInit=new HeadViewInit(MainActivity.this, "http://thoughtworks-ios.herokuapp.com/user/jsmith", HeaderView);
+		mHeadViewInit.start();
 	}
 	@Override
 	public void onRefresh() {
-		mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 2000);
+		mShowViewInit.initOriginal();
+		mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 1500);
 	}
 
 }

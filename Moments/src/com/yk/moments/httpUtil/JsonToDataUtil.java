@@ -117,6 +117,10 @@ public class JsonToDataUtil {
 						{
 							f.set(T_stance, jsonobject.get(f.getName()).toString());
 						}
+						else if(jsonobject.has("profile-image"))
+						{
+							f.set(T_stance, jsonobject.get("profile-image").toString());
+						}
 					}
 				} catch (Exception e) {
 					f.set(T_stance, "");
@@ -148,10 +152,10 @@ public class JsonToDataUtil {
 			JSONArray jsonarray=new JSONArray(jsonstr);
 			for(int i=0;i<jsonarray.length();i++)
 			{
-				if(i>4)
+				/*if(i>4)
 				{
 					Log.i("YK", ""+i);
-				}
+				}*/
 				try {
 					T T_stance=(T) cla.newInstance();
 					JSONObject jsonobject=jsonarray.getJSONObject(i);
@@ -218,7 +222,7 @@ public class JsonToDataUtil {
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			listdata.add((T) JsonToDataUtil.initJsonDatatoObject(jsonstr, cla));
 		}
 		return listdata;
 	}

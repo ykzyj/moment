@@ -9,7 +9,7 @@
         android:id="@+id/tweet_holder_top"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/holder"
+        android:background="@color/white"
         />
 
     <ImageView 
@@ -26,7 +26,7 @@
         />
 
     <TextView 
-        android:id="@+id/nick"
+        android:id="@+id/tweet_holder_nick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="昵称"

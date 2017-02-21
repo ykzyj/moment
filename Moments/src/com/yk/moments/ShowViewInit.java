@@ -23,7 +23,7 @@ public class ShowViewInit extends JsonListUtil<Tweet> implements IScrollLoadList
 	private int offset=5;
 
 	public ShowViewInit(Context context,String url,ScrollLoadListview listView,SwipeRefreshLayout layout) {
-		super(url);
+		super(context,url);
 		mContext=context;
 		mListView=listView;
 		
@@ -72,4 +72,24 @@ public class ShowViewInit extends JsonListUtil<Tweet> implements IScrollLoadList
         momentsAdapter.notifyDataSetChanged();
     }
 
+    public void initOriginal()
+    {
+    	/*mData.clear();
+    	List<Tweet> ShowData=new ArrayList<Tweet>() ;
+        for(int i=0;(i<offset)&&(i<noNullOfData.size());i++)
+        {
+            ShowData.add(noNullOfData.get(i));
+        }
+        index=0;
+        mData.addAll(ShowData);*/
+    	for(int i=noNullOfData.size()-1;i>=offset;i--)
+    	{
+    		if(i<mData.size())
+    		{
+        		mData.remove(i);
+        		index--;
+    		}
+    	}
+        momentsAdapter.notifyDataSetChanged();
+    }
 }
